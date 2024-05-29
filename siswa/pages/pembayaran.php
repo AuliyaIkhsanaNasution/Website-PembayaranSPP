@@ -1,3 +1,7 @@
+<?php
+session_start();
+require "functions/koneksi.php"
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +33,7 @@
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
@@ -41,7 +45,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
 
-      <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link text-white " href="dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
@@ -50,19 +54,20 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="pembayaran.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">notifications</i>
-            </div>
-            <span class="nav-link-text ms-1">Data Pembayaran</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="tagihan.php">
+          <a class="nav-link text-white" href="tagihan.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
             <span class="nav-link-text ms-1">Data Tagihan</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white  active bg-gradient-primary" href="pembayaran.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">notifications</i>
+            </div>
+            <span class="nav-link-text ms-1">Riwayat Pembayaran</span>
           </a>
         </li>
       </ul>
@@ -80,9 +85,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Data Pembayaran</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Riwayat Pembayaran</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Data Pembayaran</h6>
+          <h6 class="font-weight-bolder mb-0">Riwayat Pembayaran</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -92,17 +97,17 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    
+
     <div class="container-fluid py-4">
       <div class="row">
-        <div class="mb-5">
+        <!-- <div class="mb-5">
           <a href="functions/tambahkamar.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Pembayaran</a>
-        </div>
+        </div> -->
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Table Data Pembayaran</h6>
+                <h6 class="text-white text-capitalize ps-3">Riwayat Pembayaran</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -111,18 +116,38 @@
                   <thead>
                     <tr>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No.</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Kamar</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fasilitas</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NISN</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelas</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bulan</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Pembayaran</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-
-                    <?php $nom = 1;
+                    <?php
+                    $nom = 1;
+                    $query = "SELECT * FROM pembayaran
+                    JOIN tagihan ON pembayaran.id_tagihan = tagihan.id_tagihan
+                    JOIN siswa ON tagihan.nisn = siswa.nisn
+                    JOIN kelas ON siswa.id_kelas = kelas.id_kelas
+                    JOIN bulan ON tagihan.id_bulan = bulan.id_bulan
+                    WHERE tagihan.nisn = '$_SESSION[nisn]'";
+                    $result = mysqli_query($conn, $query);
+                    while ($row = mysqli_fetch_assoc($result)) :
                     ?>
-    
+                      <tr>
+                        <td class="align-middle text-center text-sm"><?= $nom++; ?></td>
+                        <td class="align-middle text-center text-sm"><?= $row['nisn']; ?></td>
+                        <td class="align-middle text-center text-sm"><?= $row['nama']; ?></td>
+                        <td class="align-middle text-center text-sm"><?= $row['nama_kelas']; ?></td>
+                        <td class="align-middle text-center text-sm"><?= $row['nama_bulan']; ?></td>
+                        <td class="align-middle text-center text-sm"><?= $row['tanggal_pembayaran']; ?></td>
+                        <td class="align-middle text-center text-sm text-primary">Rp <?= number_format($row['jumlah'], 0, ',', '.') ?></td>
+                        <td class="align-middle text-center text-sm"><?= ($row['status'] == 'LUNAS' ? '<span class="badge badge-sm bg-gradient-success">Lunas</span>' : '<span class="badge badge-sm bg-gradient-warning">Belum Lunas</span>') ?></td>
+                      </tr>
+                    <?php endwhile; ?>
                   </tbody>
                 </table>
               </div>

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2024 at 01:49 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: May 29, 2024 at 05:03 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,6 +31,13 @@ CREATE TABLE `bulan` (
   `id_bulan` int(11) NOT NULL,
   `nama_bulan` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bulan`
+--
+
+INSERT INTO `bulan` (`id_bulan`, `nama_bulan`) VALUES
+(1, 'Januari');
 
 -- --------------------------------------------------------
 
@@ -59,12 +66,17 @@ INSERT INTO `kelas` (`id_kelas`, `nama_kelas`) VALUES
 CREATE TABLE `pembayaran` (
   `id_pembayaran` int(11) NOT NULL,
   `id_tagihan` int(11) DEFAULT NULL,
-  `nisn` varchar(10) DEFAULT NULL,
-  `id_bulan` int(11) DEFAULT NULL,
-  `id_kelas` int(11) DEFAULT NULL,
   `tanggal_pembayaran` date NOT NULL,
-  `jumlah` decimal(10,2) NOT NULL
+  `jumlah` decimal(10,2) NOT NULL,
+  `status` enum('Belum Dikonfirmasi','Dikonfirmasi','','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pembayaran`
+--
+
+INSERT INTO `pembayaran` (`id_pembayaran`, `id_tagihan`, `tanggal_pembayaran`, `jumlah`, `status`) VALUES
+(1, 2, '2024-05-29', 500000.00, 'Belum Dikonfirmasi');
 
 -- --------------------------------------------------------
 
@@ -78,15 +90,17 @@ CREATE TABLE `siswa` (
   `nama` varchar(100) NOT NULL,
   `alamat` varchar(255) DEFAULT NULL,
   `no_telepon` varchar(15) DEFAULT NULL,
-  `id_kelas` int(11) DEFAULT NULL
+  `id_kelas` int(11) DEFAULT NULL,
+  `spp` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `siswa`
 --
 
-INSERT INTO `siswa` (`nisn`, `nis`, `nama`, `alamat`, `no_telepon`, `id_kelas`) VALUES
-('674897', '12321', 'Auliya Ikhsana Nasution', 'jl.patumbak', '085159968152', 1);
+INSERT INTO `siswa` (`nisn`, `nis`, `nama`, `alamat`, `no_telepon`, `id_kelas`, `spp`) VALUES
+('12345', '123', 'bobby', 'medan', '235235235', 1, 0),
+('674897', '12321', 'Auliya Ikhsana Nasution', 'jl.patumbak', '085159968152', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -97,10 +111,19 @@ INSERT INTO `siswa` (`nisn`, `nis`, `nama`, `alamat`, `no_telepon`, `id_kelas`) 
 CREATE TABLE `tagihan` (
   `id_tagihan` int(11) NOT NULL,
   `nisn` varchar(10) DEFAULT NULL,
+  `id_kelas` int(11) NOT NULL,
   `id_bulan` int(11) DEFAULT NULL,
   `jumlah` decimal(10,2) NOT NULL,
-  `status` enum('BELUM','LUNAS') DEFAULT 'BELUM'
+  `tagihan` varchar(20) NOT NULL DEFAULT '-',
+  `status` enum('BELUM','LUNAS') DEFAULT 'LUNAS'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tagihan`
+--
+
+INSERT INTO `tagihan` (`id_tagihan`, `nisn`, `id_kelas`, `id_bulan`, `jumlah`, `tagihan`, `status`) VALUES
+(2, '12345', 1, 1, 500000.00, '-', 'LUNAS');
 
 --
 -- Indexes for dumped tables
@@ -123,10 +146,7 @@ ALTER TABLE `kelas`
 --
 ALTER TABLE `pembayaran`
   ADD PRIMARY KEY (`id_pembayaran`),
-  ADD KEY `id_tagihan` (`id_tagihan`),
-  ADD KEY `nisn` (`nisn`),
-  ADD KEY `id_bulan` (`id_bulan`),
-  ADD KEY `id_kelas` (`id_kelas`);
+  ADD KEY `id_tagihan` (`id_tagihan`);
 
 --
 -- Indexes for table `siswa`
@@ -141,7 +161,8 @@ ALTER TABLE `siswa`
 ALTER TABLE `tagihan`
   ADD PRIMARY KEY (`id_tagihan`),
   ADD KEY `nisn` (`nisn`),
-  ADD KEY `id_bulan` (`id_bulan`);
+  ADD KEY `id_bulan` (`id_bulan`),
+  ADD KEY `id_kelas` (`id_kelas`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -151,7 +172,7 @@ ALTER TABLE `tagihan`
 -- AUTO_INCREMENT for table `bulan`
 --
 ALTER TABLE `bulan`
-  MODIFY `id_bulan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_bulan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `kelas`
@@ -163,13 +184,13 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tagihan`
 --
 ALTER TABLE `tagihan`
-  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -179,10 +200,7 @@ ALTER TABLE `tagihan`
 -- Constraints for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  ADD CONSTRAINT `pembayaran_ibfk_1` FOREIGN KEY (`id_tagihan`) REFERENCES `tagihan` (`id_tagihan`),
-  ADD CONSTRAINT `pembayaran_ibfk_2` FOREIGN KEY (`nisn`) REFERENCES `siswa` (`nisn`),
-  ADD CONSTRAINT `pembayaran_ibfk_3` FOREIGN KEY (`id_bulan`) REFERENCES `bulan` (`id_bulan`),
-  ADD CONSTRAINT `pembayaran_ibfk_4` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id_kelas`);
+  ADD CONSTRAINT `pembayaran_ibfk_1` FOREIGN KEY (`id_tagihan`) REFERENCES `tagihan` (`id_tagihan`);
 
 --
 -- Constraints for table `siswa`
@@ -195,7 +213,8 @@ ALTER TABLE `siswa`
 --
 ALTER TABLE `tagihan`
   ADD CONSTRAINT `tagihan_ibfk_1` FOREIGN KEY (`nisn`) REFERENCES `siswa` (`nisn`),
-  ADD CONSTRAINT `tagihan_ibfk_2` FOREIGN KEY (`id_bulan`) REFERENCES `bulan` (`id_bulan`);
+  ADD CONSTRAINT `tagihan_ibfk_2` FOREIGN KEY (`id_bulan`) REFERENCES `bulan` (`id_bulan`),
+  ADD CONSTRAINT `tagihan_ibfk_3` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id_kelas`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

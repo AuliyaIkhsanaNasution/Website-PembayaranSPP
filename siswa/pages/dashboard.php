@@ -1,8 +1,8 @@
-<?php 
+<?php
 session_start();
 if (!isset($_SESSION["login"])) {
-	header("Location: ../index.php");
-	exit;
+  header("Location: ../index.php");
+  exit;
 }
 ?>
 
@@ -35,7 +35,7 @@ if (!isset($_SESSION["login"])) {
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
@@ -47,8 +47,8 @@ if (!isset($_SESSION["login"])) {
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
 
-      <li class="nav-item">
-          <a class="nav-link text-white " href="dashboard.php">
+        <li class="nav-item">
+          <a class="nav-link text-white active  bg-gradient-primary" href="dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -56,19 +56,20 @@ if (!isset($_SESSION["login"])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="pembayaran.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">notifications</i>
-            </div>
-            <span class="nav-link-text ms-1">Data Pembayaran</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="tagihan.php">
+          <a class="nav-link text-white" href="tagihan.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
             <span class="nav-link-text ms-1">Data Tagihan</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white " href="pembayaran.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">notifications</i>
+            </div>
+            <span class="nav-link-text ms-1">Riwayat Pembayaran</span>
           </a>
         </li>
       </ul>
@@ -99,23 +100,23 @@ if (!isset($_SESSION["login"])) {
     </nav>
     <!-- End Navbar -->
 
-<!-- content -->
-<div class="container mt-5 text-center">
-    <?php
-    if(isset($_SESSION['nama'])){
-      $namaSiswa = $_SESSION['nama'];
-      echo "<h1 class='display-4'>Selamat Datang, $namaSiswa</h1>";
-    } else {
-      echo "<h1 class='display-4'>Selamat Datang, Siswa</h1>";
-    }
-    ?>
-    <div class="mt-4">
-      <img src="../assets/img/logo.jpeg" class="img-fluid" alt="Logo Sekolah" style="max-width: 200px;">
+    <!-- content -->
+    <div class="container mt-5 text-center">
+      <?php
+      if (isset($_SESSION['nama'])) {
+        $namaSiswa = $_SESSION['nama'];
+        echo "<h1 class='display-4'>Selamat Datang, $namaSiswa</h1>";
+      } else {
+        echo "<h1 class='display-4'>Selamat Datang, Siswa</h1>";
+      }
+      ?>
+      <div class="mt-4">
+        <img src="../assets/img/logo.jpeg" class="img-fluid" alt="Logo Sekolah" style="max-width: 200px;">
+      </div>
+      <div class="mt-4">
+        <h2>Pembayaran SPP SMART SCHOOL</h2>
+      </div>
     </div>
-    <div class="mt-4">
-      <h2>Pembayaran SPP SMART SCHOOL</h2>
-    </div>
-  </div>
 
 
   </main>

@@ -1,5 +1,5 @@
 <?php
-require "functions.php";
+require "koneksi.php";
 session_start();
 
 // pemeriksaan session login
@@ -10,26 +10,6 @@ if (!isset($_SESSION["login"])) {
 
 // memanggil apabila tombol submit di klik
 if (isset($_POST["submit"])) {
-    $id = htmlspecialchars($_POST["id"]);
-    $harga = htmlspecialchars($_POST["harga"]);
-    $fasilitas = htmlspecialchars($_POST["fasilitas"]);
-    $status = htmlspecialchars($_POST["status"]);
-
-    // pengecekan id apakah ada di database
-    $result = mysqli_query($conn, "SELECT id_kamar FROM kamar_kost WHERE id_kamar='$id'");
-
-    if (mysqli_fetch_assoc($result)) {
-        header("location: ?gagal=true");
-        exit;
-    }
-
-    $query = "INSERT INTO kamar_kost VALUES ('$id', '$harga', '$fasilitas', '$status' )";
-
-    if ($conn->query($query) === TRUE) {
-        header("location: ../kamar.php?tambah=true");
-    } else {
-        echo "Error: " . $query . "<br>" . $conn->error;
-    }
 }
 
 ?>
@@ -70,7 +50,7 @@ if (isset($_POST["submit"])) {
     <div class="container  bg-white  rounded-3 my-7 m-auto w-60">
         <div class="card card-plain">
             <div class="card-header pb-0 text-start">
-                <h4 class="font-weight-bolder text-5xl text-primary text-center">Tambah Data Kamar</h4>
+                <h4 class="font-weight-bolder text-5xl text-primary text-center">Upload Bukti</h4>
             </div>
 
             <!-- alert -->
@@ -85,8 +65,8 @@ if (isset($_POST["submit"])) {
             <div class="card-body">
                 <form action="" method="post">
                     <div class="mb-3">
-                        <label for="id" class="text-lg text-dark text-bold">ID Kamar</label>
-                        <input type="text" name="id" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="ID/No Kamar Kost" required autocomplete="off">
+                        <label for="va" class="text-lg text-dark text-bold">Masukkan VA</label>
+                        <input type="text" name="va" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="VA Tagihan..." required autocomplete="off">
                     </div>
                     <div class="mb-3">
                         <label for="harga" class="text-lg text-dark text-bold">Harga Sewa</label>
