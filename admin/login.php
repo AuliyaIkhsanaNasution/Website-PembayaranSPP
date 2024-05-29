@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Inisialisasi variabel error
 $error = "";
 
@@ -6,7 +8,9 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Cek apakah username dan password sesuai dengan yang diharapkan
     if ($_POST["username"] === "auliya" && $_POST["password"] === "674") {
-        // Jika sesuai, alihkan ke halaman dashboard
+        // Jika sesuai, set sesi login dan alihkan ke halaman dashboard
+        $_SESSION["login"] = true;
+        $_SESSION["username"] = $_POST["username"]; // Set session username
         header("Location: pages/dashboard.php");
         exit;
     } else {
@@ -15,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">

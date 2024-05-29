@@ -9,11 +9,10 @@ if (!isset($_SESSION["login"])) {
 }
 
 // read
-$query = "SELECT pembayaran.id_pembayaran, tagihan.id_tagihan, pembayaran.tanggal_pembayaran, pembayaran.jumlah
-FROM pembayaran 
-JOIN tagihan  ON pembayaran.id_tagihan = tagihan.id_tagihan";
+$query = "SELECT * FROM bulan";
 $hasil = $conn->query($query);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +66,7 @@ $hasil = $conn->query($query);
         </li>
 
         <li class="nav-item">
-          <a class="nav-link text-white " href="bulan.php">
+          <a class="nav-link text-white active bg-gradient-primary" href="bulan.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">brightness_2</i>
             </div>
@@ -83,7 +82,7 @@ $hasil = $conn->query($query);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="siswa.php">
+          <a class="nav-link text-white" href="siswa.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
@@ -91,7 +90,7 @@ $hasil = $conn->query($query);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="pembayaran.php">
+          <a class="nav-link text-white " href="pembayaran.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">notifications</i>
             </div>
@@ -121,9 +120,9 @@ $hasil = $conn->query($query);
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Data Pembayaran</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Data Bulan</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Data Pembayaran</h6>
+          <h6 class="font-weight-bolder mb-0">Data Bulan</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -137,13 +136,12 @@ $hasil = $conn->query($query);
     <div class="container-fluid py-4">
       <div class="row">
         <div class="mb-5">
-          <a href="functions/tambahkamar.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Pembayaran</a>
         </div>
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Table Data Pembayaran</h6>
+                <h6 class="text-white text-capitalize ps-3">Table Data Bulan</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -151,32 +149,23 @@ $hasil = $conn->query($query);
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No.</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Tagihan</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Pembayaran</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                      <th class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">No.</th>
+                      <th class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">Nama Bulan</th>
                     </tr>
                   </thead>
                   <tbody>
 
                     <?php $nom = 1;
                     ?>
-                    <?php while ($pembayaran = $hasil->fetch_assoc()) :
+                    <?php while ($bulan = $hasil->fetch_assoc()) :
                     ?>
                       <tr>
                         <td class="text-center"><?= $nom++ ?></td>
-                        <td class="align-middle text-center text-sm text-bold"><?= $pembayaran['id_tagihan'] ?></td>
-                        <td class="align-middle text-center text-sm text-bold"><?= $pembayaran['tanggal_pembayaran'] ?></td>
-                        <td class="align-middle text-center text-sm text-bold"><?= $pembayaran['jumlah'] ?></td>
-                        <td class="align-middle text-center text-sm text-bold">
-                          <a href="functions/editpembayaran.php?id=<?= $pembayaran['id_pembayaran'] ?>"><i class="material-icons">edit</i></a>
-                          <a href="functions/hapuspembayaran.php?id=<?= $pembayaran['id_pembayaran'] ?>"><i class=" material-icons" onclick=" return confirm ('Apakah Anda Yakin Ingin Menghapus data Ini ?');">delete</i></a>
-                        </td>
+                        <td class="align-middle text-center text-sm text-bold"><?= $bulan['nama_bulan'] ?></td>
+                    
                       </tr>
                     <?php endwhile;
                     ?>
-                    </tbody>
                   </tbody>
                 </table>
               </div>

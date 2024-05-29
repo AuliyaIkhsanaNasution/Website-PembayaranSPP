@@ -1,3 +1,19 @@
+<?php
+require "functions/koneksi.php";
+session_start();
+
+// Redirect if not logged in
+if (!isset($_SESSION["login"])) {
+    header("Location: ../login.php");
+    exit;
+}
+
+// Query untuk mengambil data siswa beserta nama_kelas
+$query = "SELECT siswa.nisn, siswa.nis, siswa.nama, siswa.alamat, siswa.no_telepon, kelas.nama_kelas 
+          FROM siswa 
+          JOIN kelas ON siswa.id_kelas = kelas.id_kelas";
+$hasil = $conn->query($query);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +65,14 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white " href="bulan.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">brightness_2</i>
+            </div>
+            <span class="nav-link-text ms-1">Data Bulan</span>
+          </a>
 
         <li class="nav-item">
           <a class="nav-link text-white " href="kelas.php">
@@ -125,21 +149,37 @@
             <div class="card-body px-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
-                  <thead>
+                <thead>
                     <tr>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No.</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Kamar</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fasilitas</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-secondary opacity-7"></th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NISN</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NIS</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Alamat</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nomor Telepon</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelas</th>
+                      <th class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-
-                    <?php $nom = 1;
+                    <?php 
+                    $nom = 1;
+                    while ($siswa = $hasil->fetch_assoc()) : 
                     ?>
-    
+                    <tr>
+                      <td class="text-center"><?= $nom++ ?></td>
+                      <td class="align-middle text-center text-sm"><?= $siswa['nisn'] ?></td>
+                      <td class="align-middle text-center text-sm"><?= $siswa['nis'] ?></td>
+                      <td class="align-middle text-center text-sm"><?= $siswa['nama'] ?></td>
+                      <td class="align-middle text-center text-sm"><?= $siswa['alamat'] ?></td>
+                      <td class="align-middle text-center text-sm"><?= $siswa['no_telepon'] ?></td>
+                      <td class="align-middle text-center text-sm"><?= $siswa['nama_kelas'] ?></td>
+                      <td class="align-middle text-center text-sm">
+                        <a href="functions/editsiswa.php?id=<?= $siswa['nisn'] ?>"><i class="material-icons">edit</i></a>
+                        <a href="functions/hapussiswa.php?id=<?= $siswa['nisn'] ?>" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus data Ini ?');"><i class="material-icons">delete</i></a>
+                      </td>
+                    </tr>
+                    <?php endwhile; ?>
                   </tbody>
                 </table>
               </div>

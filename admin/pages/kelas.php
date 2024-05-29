@@ -1,3 +1,16 @@
+<?php
+require "functions/koneksi.php";
+session_start();
+
+// Redirect if not logged in
+if (!isset($_SESSION["login"])) {
+    header("Location: ../login.php");
+    exit;
+}
+// read
+$query = "SELECT * FROM kelas";
+$hasil = $conn->query($query);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +62,14 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white " href="bulan.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">brightness_2</i>
+            </div>
+            <span class="nav-link-text ms-1">Data Bulan</span>
+          </a>
 
         <li class="nav-item">
           <a class="nav-link text-white active bg-gradient-primary" href="kelas.php">
@@ -125,21 +146,28 @@
             <div class="card-body px-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
-                  <thead>
+                <thead>
                     <tr>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No.</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Kamar</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fasilitas</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-secondary opacity-7"></th>
+                      <th class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">No.</th>
+                      <th class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">Nama Kelas</th>
+                      <th class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">Action</th>
                     </tr>
-                  </thead>
                   <tbody>
 
-                    <?php $nom = 1;
-                    ?>
-    
+                  <?php $nom = 1;
+                  ?>
+                  <?php while ($kelas = $hasil->fetch_assoc()) :
+                  ?>
+                    <tr>
+                      <td class="text-center"><?= $nom++ ?></td>
+                      <td class="align-middle text-center text-sm text-bold"><?= $kelas['nama_kelas'] ?></td>
+                      <td class="align-middle text-center text-sm text-bold">
+                        <a href="functions/editkelas.php?id=<?= $kelas['id_kelas'] ?>"><i class="material-icons">edit</i></a>
+                        <a href="functions/hapuskelas.php?id=<?= $kelas['id_kelas'] ?>"><i class=" material-icons" onclick=" return confirm ('Apakah Anda Yakin Ingin Menghapus data Ini ?');">delete</i></a>
+                      </td>
+                    </tr>
+                  <?php endwhile;
+                  ?>
                   </tbody>
                 </table>
               </div>

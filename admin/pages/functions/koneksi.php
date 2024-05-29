@@ -1,7 +1,7 @@
 <?php
 
 // connect database
-$conn = mysqli_connect("localhost", "root", "", "sewakost");
+$conn = mysqli_connect("localhost", "root", "", "spp");
 
 // Memeriksa koneksi
 if ($conn->connect_error) {
