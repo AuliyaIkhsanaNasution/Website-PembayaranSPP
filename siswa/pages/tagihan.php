@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.jpeg">
   <title>
-    Dashboard Admin Pembayaran SPP Smart School
+    Dashboard Siswa Pembayaran SPP Smart School
   </title>
   <!-- icons google -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -34,7 +34,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
         <img src="../assets/img/logo.jpeg" class="navbar-brand-img h-100 rounded-circle" alt="main_logo">
-        <span class="ms-1 font-weight-bold text-white">Dashboard Admin</span>
+        <span class="ms-1 font-weight-bold text-white">Dashboard Siswa</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -49,23 +49,6 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
-
-        <li class="nav-item">
-          <a class="nav-link text-white " href="kelas.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">school</i>
-            </div>
-            <span class="nav-link-text ms-1">Data Kelas</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="siswa.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">person</i>
-            </div>
-            <span class="nav-link-text ms-1">Data Siswa</span>
-          </a>
-        </li>
         <li class="nav-item">
           <a class="nav-link text-white " href="pembayaran.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -75,11 +58,11 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="tunggakan.php">
+          <a class="nav-link text-white active bg-gradient-primary" href="tagihan.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
-            <span class="nav-link-text ms-1">Data Tunggakan</span>
+            <span class="nav-link-text ms-1">Data Tagihan</span>
           </a>
         </li>
       </ul>
@@ -97,13 +80,13 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Data Siswa</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Data Pembayaran</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Data Siswa</h6>
+          <h6 class="font-weight-bolder mb-0">Data Pembayaran</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <label class="form-label text-2xl text-bold text-primary">Selamat Datang Admin 👋</label>
+            <label class="form-label text-2xl text-bold text-primary">Selamat Datang Siswa 👋</label>
           </div>
         </div>
       </div>
@@ -113,13 +96,13 @@
     <div class="container-fluid py-4">
       <div class="row">
         <div class="mb-5">
-          <a href="functions/tambahkamar.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Siswa</a>
+          <a href="functions/tambahkamar.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Tagihan</a>
         </div>
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Table Data Siswa</h6>
+                <h6 class="text-white text-capitalize ps-3">Table Data Tagihan</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">

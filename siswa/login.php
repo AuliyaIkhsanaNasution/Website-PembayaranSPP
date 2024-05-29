@@ -19,8 +19,13 @@ if (isset($_POST["login"])) {
 	$cek = mysqli_num_rows($result);
 
 	if ($cek > 0) {
+		// Fetch the user data
+		$row = mysqli_fetch_assoc($result);
+
 		// Jika data ditemukan, set sesi login dan redirect ke halaman utama
 		$_SESSION["login"] = true;
+		$_SESSION["nama"] = $row['nama']; // Assuming 'nama' is the column for the user's name
+
 		header("Location: pages/dashboard.php");
 		exit;
 	} else {
