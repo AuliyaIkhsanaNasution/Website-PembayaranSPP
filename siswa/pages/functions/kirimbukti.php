@@ -8,8 +8,62 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 
+// pemeriksaan lunas
+$cekLunas = "SELECT * FROM tagihan WHERE nisn = '$_SESSION[nisn]' AND status = 'LUNAS'";
+$cekLunas = mysqli_query($conn, $cekLunas);
+if (mysqli_num_rows($cekLunas) > 0) {
+    header("Location: ../tagihan.php?lunas=true");
+    exit;
+}
+
+
+
 // memanggil apabila tombol submit di klik
 if (isset($_POST["submit"])) {
+    $idTagihan = $_POST["idTagihan"];
+    $jumlah = $_POST["jumlah"];
+    $va = htmlspecialchars($_POST["va"]);
+    $bukti = $_FILES["bukti"]["name"];
+    $buktiSize = $_FILES["bukti"]["size"];
+    $tmpName = $_FILES["bukti"]["tmp_name"];
+
+    // cek apakah yang diupload adalah gambar
+    $validExtension = ['jpeg', 'jpg', 'png'];
+    $extension = explode('.', $bukti);
+    $extension = strtolower(end($extension));
+    if (!in_array($extension, $validExtension)) {
+        echo "<script>
+                    alert('Yang anda upload bukan gambar!');
+                  </script>";
+        return false;
+    }
+
+    // cek jika ukuran gambar terlalu besar
+    if ($buktiSize > 2000000) {
+        echo "<script>
+                    alert('Ukuran gambar terlalu besar!');
+                  </script>";
+        return false;
+    }
+
+    // lolos pengecekan, gambar siap diupload
+    // generate nama gambar baru
+    $newFileName = uniqid();
+    // $newFileName .= '.';
+    // $newFileName .= $extension;
+    move_uploaded_file($tmpName, '../../assets/img/bukti/' . $newFileName . '.' . $extension);
+
+    // insert ke pembayaran
+    $queryInsert = "INSERT INTO pembayaran (id_pembayaran, id_tagihan, tanggal_pembayaran, jumlah, status, bukti, va) VALUES ('', '$idTagihan', NOW(), $jumlah, 'Belum Dikonfirmasi', '$newFileName.$extension', '$va')";
+
+    // update tagihan
+    $queryUpdate = "UPDATE tagihan SET status = 'DIPERIKSA' WHERE id_tagihan = '$idTagihan'";
+
+    if (mysqli_query($conn, $queryInsert) && mysqli_query($conn, $queryUpdate)) {
+        header("Location: ../tagihan.php?bukti=true");
+    } else {
+        echo mysqli_error($conn);
+    }
 }
 
 ?>
@@ -63,34 +117,24 @@ if (isset($_POST["submit"])) {
 
 
             <div class="card-body">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="idTagihan" id="idTagihan" value="<?= $_GET['id'] ?>">
+                    <input type="hidden" name="jumlah" id="jumlah" value="<?= $_GET['jumlah'] ?>">
                     <div class="mb-3">
                         <label for="va" class="text-lg text-dark text-bold">Masukkan VA</label>
                         <input type="text" name="va" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="VA Tagihan..." required autocomplete="off">
                     </div>
                     <div class="mb-3">
-                        <label for="harga" class="text-lg text-dark text-bold">Harga Sewa</label>
-                        <input type="text" name="harga" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="Harga Kamar Kost" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="fasilitas" class="text-lg text-dark text-bold">Fasilitas</label>
-                        <input type="text" name="fasilitas" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="Fasilitas Kamar Kost">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="status" class="text-lg text-dark text-bold">Status</label>
-                        <select name="status" id="status" class="form-control form-control-lg" required style="border: 2px solid gray;">
-                            <option selected>--Pilih Status--</option>
-                            <option value="tersedia">Tersedia</option>
-                            <option value="disewa">Disewa</option>
-                        </select>
+                        <label for="bukti" class="text-lg text-dark text-bold">Masukkan Bukti</label>
+                        <p>File harus berformat image (jpg, jpeg, png)</p>
+                        <input type="file" name="bukti" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="VA Tagihan..." required autocomplete="off" accept="image/jpg, image/jpeg, image/png">
                     </div>
 
 
                     <div class="text-center">
                         <button type="submit" name="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Tambahkan Data</button>
                     </div>
-                    <p class="text-sm mt-3 mb-0">Tidak ingin menambahkan data? <a href="../kamar.php" class="text-dark font-weight-bolder">kembali</a></p>
+                    <p class="text-sm mt-3 mb-0">Tidak ingin mengupload data? <a href="../tagihan.php" class="text-dark font-weight-bolder">kembali</a></p>
                 </form>
             </div>
         </div>

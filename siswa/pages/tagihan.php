@@ -32,6 +32,14 @@ require "functions/koneksi.php"
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
+<?php
+if (isset($_GET['lunas'])) : ?>
+  <script>
+    alert("Tagihan Lunas!!Anda tidak perlu mengirim bukti pembayaran.");
+  </script>
+<?php endif; ?>
+
+
 <body class="g-sidenav-show  bg-gray-200">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
@@ -143,8 +151,8 @@ require "functions/koneksi.php"
                         <td class="align-middle text-center text-sm"><?= $row['nama_kelas']; ?></td>
                         <td class="align-middle text-center text-sm"><?= $row['nama_bulan']; ?></td>
                         <td class="align-middle text-center text-sm text-primary"><?= $row['tagihan']; ?></td>
-                        <td class="align-middle text-center text-sm"><?= ($row['status'] == 'LUNAS' ? '<span class="badge badge-sm bg-gradient-success">Lunas</span>' : '<span class="badge badge-sm bg-gradient-warning">Belum Lunas</span>') ?></td>
-                        <td class="align-middle text-center text-sm"><a href="functions/kirimbukti.php" class="btn btn-primary">Kirim Bukti Bayar</a></td>
+                        <td class="align-middle text-center text-sm"><?= ($row['status'] == 'LUNAS' ? '<span class="badge badge-sm bg-gradient-success">Lunas</span>' : ($row['status'] == 'BELUM' ? '<span class="badge badge-sm bg-gradient-warning">Belum Lunas</span>' : '<span class="badge badge-sm bg-gradient-danger">Diperiksa</span>')) ?></td>
+                        <td class="align-middle text-center text-sm"><a href="functions/kirimbukti.php?id=<?= $row['id_tagihan'] ?>&jumlah=<?= $row['spp'] ?>" class="btn btn-primary <?= ($row['status'] == 'BELUM' ? '' : 'disabled') ?>">Kirim Bukti Bayar</a></td>
                       </tr>
                     <?php endwhile; ?>
                   </tbody>

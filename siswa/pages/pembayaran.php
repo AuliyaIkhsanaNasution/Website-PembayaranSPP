@@ -145,7 +145,7 @@ require "functions/koneksi.php"
                         <td class="align-middle text-center text-sm"><?= $row['nama_bulan']; ?></td>
                         <td class="align-middle text-center text-sm"><?= $row['tanggal_pembayaran']; ?></td>
                         <td class="align-middle text-center text-sm text-primary">Rp <?= number_format($row['jumlah'], 0, ',', '.') ?></td>
-                        <td class="align-middle text-center text-sm"><?= ($row['status'] == 'LUNAS' ? '<span class="badge badge-sm bg-gradient-success">Lunas</span>' : '<span class="badge badge-sm bg-gradient-warning">Belum Lunas</span>') ?></td>
+                        <td class="align-middle text-center text-sm"><?= ($row['status'] == 'LUNAS' ? '<span class="badge badge-sm bg-gradient-success">Lunas</span>' : '<span class="badge badge-sm bg-gradient-warning">' . $row['status'] . '</span>') ?></td>
                       </tr>
                     <?php endwhile; ?>
                   </tbody>
@@ -176,7 +176,7 @@ require "functions/koneksi.php"
 
   <!-- alert -->
   <?php
-  if (isset($_GET['tambah'])) : ?>
+  if (isset($_GET[''])) : ?>
     <script>
       alert("Data Berhasil Ditambahkan");
     </script>
