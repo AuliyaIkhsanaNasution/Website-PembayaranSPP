@@ -132,20 +132,38 @@ if (!isset($_SESSION["login"])) {
         <h2 class="text-xl font-semibold mb-4">Dashboard Pembayaran SPP Smart School</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <!-- Card Jumlah Siswa -->
+            <?php
+                    $jumlahsiswa = "SELECT COUNT(*) AS jumlah_siswa FROM siswa";
+                    $siswa = $conn->query($jumlahsiswa);
+                    while ($sis = $siswa->fetch_assoc()) :
+                    ?>
             <div class="bg-gradient-dark rounded-lg p-4 shadow-md text-white">
                 <h3 class="text-lg font-semibold mb-2 text-white">Jumlah Siswa</h3>
-                <p class="text-3xl font-bold">[Jumlah Siswa]</p>
+                <p class="text-3xl font-bold"><?= $sis['jumlah_siswa'] ?></p>
             </div>
+            <?php endwhile; ?>
             <!-- Card Jumlah Kelas -->
+            <?php
+                    $jumlahkelas = "SELECT COUNT(*) AS jumlah_kelas FROM kelas";
+                    $kelas = $conn->query($jumlahkelas);
+                    while ($sis = $kelas->fetch_assoc()) :
+                    ?>
             <div class="bg-gradient-dark rounded-lg p-4 shadow-md mt-4 text-white">
                 <h3 class="text-lg font-semibold mb-2 text-white">Jumlah Kelas</h3>
-                <p class="text-3xl font-bold">[Jumlah Kelas]</p>
+                <p class="text-3xl font-bold"><?= $sis['jumlah_kelas'] ?></p>
             </div>
+            <?php endwhile; ?>
             <!-- Card Total Pemasukan SPP -->
+            <?php
+                    $jumlahuang = "SELECT SUM(jumlah) AS total_spp FROM pembayaran";
+                    $uang = $conn->query($jumlahuang);
+                    while ($u = $uang->fetch_assoc()) :
+                    ?>
             <div class="bg-gradient-dark rounded-lg p-4 shadow-md mt-4 text-white">
                 <h3 class="text-lg font-semibold mb-2 text-white">Total Pemasukan SPP</h3>
-                <p class="text-3xl font-bold">[Total Pemasukan SPP]</p>
+                <p class="text-3xl font-bold">Rp. <?= number_format($u['total_spp'], 0, ',', '.'); ?></p>
             </div>
+            <?php endwhile; ?>
         </div>
         <div >
             <h3 class="text-lg font-semibold mt-4 " >Dashboard Pembayaran SPP Smart School</h3>
