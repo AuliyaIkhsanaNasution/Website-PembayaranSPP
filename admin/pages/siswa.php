@@ -4,8 +4,8 @@ session_start();
 
 // Redirect if not logged in
 if (!isset($_SESSION["login"])) {
-    header("Location: ../login.php");
-    exit;
+  header("Location: ../login.php");
+  exit;
 }
 
 // Query untuk mengambil data siswa beserta nama_kelas
@@ -45,7 +45,7 @@ $hasil = $conn->query($query);
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
@@ -57,7 +57,7 @@ $hasil = $conn->query($query);
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
 
-      <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link text-white " href="dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
@@ -133,11 +133,11 @@ $hasil = $conn->query($query);
       </div>
     </nav>
     <!-- End Navbar -->
-    
+
     <div class="container-fluid py-4">
       <div class="row">
         <div class="mb-5">
-          <a href="functions/tambahkamar.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Siswa</a>
+          <a href="functions/tambahSiswa.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Siswa</a>
         </div>
         <div class="col-12">
           <div class="card my-4">
@@ -149,7 +149,7 @@ $hasil = $conn->query($query);
             <div class="card-body px-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
-                <thead>
+                  <thead>
                     <tr>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No.</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NISN</th>
@@ -162,23 +162,23 @@ $hasil = $conn->query($query);
                     </tr>
                   </thead>
                   <tbody>
-                    <?php 
+                    <?php
                     $nom = 1;
-                    while ($siswa = $hasil->fetch_assoc()) : 
+                    while ($siswa = $hasil->fetch_assoc()) :
                     ?>
-                    <tr>
-                      <td class="text-center"><?= $nom++ ?></td>
-                      <td class="align-middle text-center text-sm"><?= $siswa['nisn'] ?></td>
-                      <td class="align-middle text-center text-sm"><?= $siswa['nis'] ?></td>
-                      <td class="align-middle text-center text-sm"><?= $siswa['nama'] ?></td>
-                      <td class="align-middle text-center text-sm"><?= $siswa['alamat'] ?></td>
-                      <td class="align-middle text-center text-sm"><?= $siswa['no_telepon'] ?></td>
-                      <td class="align-middle text-center text-sm"><?= $siswa['nama_kelas'] ?></td>
-                      <td class="align-middle text-center text-sm">
-                        <a href="functions/editsiswa.php?id=<?= $siswa['nisn'] ?>"><i class="material-icons">edit</i></a>
-                        <a href="functions/hapussiswa.php?id=<?= $siswa['nisn'] ?>" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus data Ini ?');"><i class="material-icons">delete</i></a>
-                      </td>
-                    </tr>
+                      <tr>
+                        <td class="text-center"><?= $nom++ ?></td>
+                        <td class="align-middle text-center text-sm"><?= $siswa['nisn'] ?></td>
+                        <td class="align-middle text-center text-sm"><?= $siswa['nis'] ?></td>
+                        <td class="align-middle text-center text-sm"><?= $siswa['nama'] ?></td>
+                        <td class="align-middle text-center text-sm"><?= $siswa['alamat'] ?></td>
+                        <td class="align-middle text-center text-sm"><?= $siswa['no_telepon'] ?></td>
+                        <td class="align-middle text-center text-sm"><?= $siswa['nama_kelas'] ?></td>
+                        <td class="align-middle text-center text-sm">
+                          <a href="functions/editSiswa.php?id=<?= $siswa['nisn'] ?>"><i class="material-icons">edit</i></a>
+                          <a href="functions/hapusSiswa.php?id=<?= $siswa['nisn'] ?>" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus data Ini ?');"><i class="material-icons">delete</i></a>
+                        </td>
+                      </tr>
                     <?php endwhile; ?>
                   </tbody>
                 </table>
