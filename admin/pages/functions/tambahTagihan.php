@@ -77,15 +77,6 @@ if (isset($_POST["submit"])) {
                 <h4 class="font-weight-bolder text-5xl text-primary text-center">Tambah Tagihan</h4>
             </div>
 
-            <!-- alert -->
-            <?php
-            if (isset($_GET['gagal'])) : ?>
-                <script>
-                    alert("ID Kamar Sudah Terdaftar!");
-                </script>
-            <?php endif; ?>
-
-
             <div class="card-body">
                 <form action="" method="post">
                     <div class="mb-3">

@@ -16,7 +16,7 @@ require "functions/koneksi.php"
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.jpeg">
   <title>
-    Dashboard Siswa Pembayaran SPP Smart School
+    Tagihan | Dashboard Siswa Pembayaran SPP Smart School
   </title>
   <!-- icons google -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />

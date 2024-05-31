@@ -26,7 +26,7 @@ $hasil = $conn->query($query);
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo.jpeg">
   <title>
-    Dashboard Admin Pembayaran SPP Smart School
+    Tagihan Admin Pembayaran SPP Smart School
   </title>
   <!-- icons google -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -48,6 +48,18 @@ $hasil = $conn->query($query);
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
+
+<?php
+  if (isset($_GET['konfirmasi'])) : ?>
+    <script>
+      Swal.fire({
+        icon: "success",
+        title: "Sukses",
+        text: "Data Tagihan berhasil Dibuat",
+      });
+    </script>
+  <?php endif; ?>
+
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -142,6 +154,7 @@ $hasil = $conn->query($query);
       <div class="row">
         <div class="mb-5">
           <a href="functions/tambahTagihan.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Tagihan</a>
+          <a href="cetak/cetaktagihan.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Cetak Tagihan</a>
         </div>
         <div class="col-12">
           <div class="card my-4">
@@ -212,28 +225,6 @@ $hasil = $conn->query($query);
   </main>
 
 
-  <!-- alert -->
-  <?php
-  if (isset($_GET['konfirmasi'])) : ?>
-    <script>
-      alert("Tagihan berhasil dibuat");
-    </script>
-  <?php endif; ?>
-
-  <?php
-  if (isset($_GET['ubah'])) : ?>
-    <script>
-      alert("Data Berhasil Diupdate");
-    </script>
-  <?php endif; ?>
-
-  <?php
-  if (isset($_GET['hapus'])) : ?>
-    <script>
-      alert("Data Berhasil Dihapus");
-    </script>
-  <?php endif; ?>
-  <!-- akhir alert -->
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
