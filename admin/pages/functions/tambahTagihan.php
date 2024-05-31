@@ -1,5 +1,5 @@
 <?php
-require "functions.php";
+require "koneksi.php";
 session_start();
 
 // pemeriksaan session login
@@ -10,25 +10,29 @@ if (!isset($_SESSION["login"])) {
 
 // memanggil apabila tombol submit di klik
 if (isset($_POST["submit"])) {
-    $id = htmlspecialchars($_POST["id"]);
-    $harga = htmlspecialchars($_POST["harga"]);
-    $fasilitas = htmlspecialchars($_POST["fasilitas"]);
-    $status = htmlspecialchars($_POST["status"]);
+    $bulan = $_POST["bulan"];
+    list($year, $month) = explode("-", $bulan);
+    $id_bulan = (int)$month;
 
-    // pengecekan id apakah ada di database
-    $result = mysqli_query($conn, "SELECT id_kamar FROM kamar_kost WHERE id_kamar='$id'");
+    $rand = rand(1, 999);
 
-    if (mysqli_fetch_assoc($result)) {
-        header("location: ?gagal=true");
-        exit;
+    // update tagihan
+    // ambil siswa lalu looping
+    $siswa = mysqli_query($conn, "SELECT * FROM siswa");
+    while ($data = mysqli_fetch_array($siswa)) {
+        $nisn = $data["nisn"];
+
+        // menggabungkan dan memastikan rand + nisn
+        $tagihan = str_pad($rand, 3, "0", STR_PAD_LEFT) . $nisn;
+
+        // update tagihan untuk setiap nisn
+        $update = mysqli_query($conn, "UPDATE tagihan SET id_bulan = $id_bulan, tagihan = '$tagihan', status = 'BELUM' WHERE nisn = '$nisn'");
     }
 
-    $query = "INSERT INTO kamar_kost VALUES ('$id', '$harga', '$fasilitas', '$status' )";
-
-    if ($conn->query($query) === TRUE) {
-        header("location: ../kamar.php?tambah=true");
+    if ($update) {
+        header("Location: ../tagihan.php?konfirmasi=true");
     } else {
-        echo "Error: " . $query . "<br>" . $conn->error;
+        echo mysqli_error($conn);
     }
 }
 
@@ -70,7 +74,7 @@ if (isset($_POST["submit"])) {
     <div class="container  bg-white  rounded-3 my-7 m-auto w-60">
         <div class="card card-plain">
             <div class="card-header pb-0 text-start">
-                <h4 class="font-weight-bolder text-5xl text-primary text-center">Tambah Data Kamar</h4>
+                <h4 class="font-weight-bolder text-5xl text-primary text-center">Tambah Tagihan</h4>
             </div>
 
             <!-- alert -->
@@ -85,32 +89,14 @@ if (isset($_POST["submit"])) {
             <div class="card-body">
                 <form action="" method="post">
                     <div class="mb-3">
-                        <label for="id" class="text-lg text-dark text-bold">ID Kamar</label>
-                        <input type="text" name="id" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="ID/No Kamar Kost" required autocomplete="off">
+                        <label for="bulan" class="text-lg text-dark text-bold">Masukkan Bulan Tagihan</label>
+                        <input type="month" name="bulan" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="Masukkan Bulan Tagihan..." required autocomplete="off">
                     </div>
-                    <div class="mb-3">
-                        <label for="harga" class="text-lg text-dark text-bold">Harga Sewa</label>
-                        <input type="text" name="harga" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="Harga Kamar Kost" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="fasilitas" class="text-lg text-dark text-bold">Fasilitas</label>
-                        <input type="text" name="fasilitas" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="Fasilitas Kamar Kost">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="status" class="text-lg text-dark text-bold">Status</label>
-                        <select name="status" id="status" class="form-control form-control-lg" required style="border: 2px solid gray;">
-                            <option selected>--Pilih Status--</option>
-                            <option value="tersedia">Tersedia</option>
-                            <option value="disewa">Disewa</option>
-                        </select>
-                    </div>
-
 
                     <div class="text-center">
-                        <button type="submit" name="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Tambahkan Data</button>
+                        <button type="submit" name="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Buat Tagihan</button>
                     </div>
-                    <p class="text-sm mt-3 mb-0">Tidak ingin menambahkan data? <a href="../kamar.php" class="text-dark font-weight-bolder">kembali</a></p>
+                    <p class="text-sm mt-3 mb-0">Tidak ingin membuat tagihan? <a href="../tagihan.php" class="text-dark font-weight-bolder">kembali</a></p>
                 </form>
             </div>
         </div>

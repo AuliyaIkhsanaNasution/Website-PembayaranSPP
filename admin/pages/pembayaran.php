@@ -14,8 +14,7 @@ JOIN tagihan ON pembayaran.id_tagihan = tagihan.id_tagihan
 JOIN siswa ON tagihan.nisn = siswa.nisn
 JOIN kelas ON siswa.id_kelas = kelas.id_kelas
 JOIN bulan ON tagihan.id_bulan = bulan.id_bulan
-WHERE tagihan.nisn = '$_SESSION[nisn]'
-ORDER BY tagihan.id_tagihan DESC";
+ORDER BY pembayaran.id_pembayaran DESC";
 $hasil = $conn->query($query);
 ?>
 

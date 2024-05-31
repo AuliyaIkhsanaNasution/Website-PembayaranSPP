@@ -28,9 +28,9 @@ require "functions/koneksi.php"
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
-    <!-- sweetalert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+  <!-- sweetalert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
@@ -40,17 +40,20 @@ require "functions/koneksi.php"
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
-<?php
-if (isset($_GET['lunas'])) : ?>
-  <script>
-Swal.fire("Tagihan Lunas!!Anda tidak perlu mengirim bukti pembayaran.");
-  </script>
-<?php endif; ?>
+<body class="g-sidenav-show  bg-gray-200">
 
 
-<?php
-if (isset($_GET['bukti'])) : ?>
- <script>
+  <?php
+  if (isset($_GET['lunas'])) : ?>
+    <script>
+      Swal.fire("Tagihan Lunas!!Anda tidak perlu mengirim bukti pembayaran.");
+    </script>
+  <?php endif; ?>
+
+
+  <?php
+  if (isset($_GET['bukti'])) : ?>
+    <script>
       Swal.fire({
         icon: "success",
         title: "Sukses",
@@ -58,10 +61,9 @@ if (isset($_GET['bukti'])) : ?>
         footer: 'Cek status Secara Berkala'
       });
     </script>
-<?php endif; ?>
+  <?php endif; ?>
 
 
-<body class="g-sidenav-show  bg-gray-200">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -146,7 +148,7 @@ if (isset($_GET['bukti'])) : ?>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelas</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bulan</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tagihan</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tagihan / VA</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
@@ -168,9 +170,9 @@ if (isset($_GET['bukti'])) : ?>
                         <td class="align-middle text-center text-sm"><?= $row['nama']; ?></td>
                         <td class="align-middle text-center text-sm"><?= $row['nama_kelas']; ?></td>
                         <td class="align-middle text-center text-sm"><?= $row['nama_bulan']; ?></td>
-                        <td class="align-middle text-center text-sm text-primary"><?= $row['tagihan']; ?></td>
+                        <td class="align-middle text-center text-sm text-primary text-bolder"><?= ($row['tagihan'] == '-' ? '-' : $row['tagihan'] . ' (VA BNI)') ?></td>
                         <td class="align-middle text-center text-sm"><?= ($row['status'] == 'LUNAS' ? '<span class="badge badge-sm bg-gradient-success">Lunas</span>' : ($row['status'] == 'BELUM' ? '<span class="badge badge-sm bg-gradient-warning">Belum Lunas</span>' : '<span class="badge badge-sm bg-gradient-danger">Diperiksa</span>')) ?></td>
-                        <td class="align-middle text-center text-sm"><a href="functions/kirimbukti.php?id=<?= $row['id_tagihan'] ?>&jumlah=<?= $row['spp'] ?>" class="btn btn-primary <?= ($row['status'] == 'BELUM' ? '' : 'disabled') ?>">Kirim Bukti Bayar</a></td>
+                        <td class="align-middle text-center text-sm"><a href="functions/kirimbukti.php?id=<?= $row['id_tagihan'] ?>" class="btn btn-primary <?= ($row['status'] == 'BELUM' ? '' : 'disabled') ?>">Kirim Bukti Bayar</a></td>
                       </tr>
                     <?php endwhile; ?>
                   </tbody>

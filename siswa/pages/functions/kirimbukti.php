@@ -105,6 +105,7 @@ if (isset($_POST["submit"])) {
         <div class="card card-plain">
             <div class="card-header pb-0 text-start">
                 <h4 class="font-weight-bolder text-5xl text-primary text-center">Upload Bukti</h4>
+                <p class="text-danger text-sm">*NB : Harap upload bukti pembayaran dengan jelas. Kesalahan pengiriman bukti berakibat pada SPP tidak terbayar !!!</p>
             </div>
 
             <!-- alert -->
@@ -115,14 +116,21 @@ if (isset($_POST["submit"])) {
                 </script>
             <?php endif; ?>
 
+            <?php
+            // ambil data tagihan
+            $queryTagihan = "SELECT * FROM tagihan WHERE id_tagihan = '$_GET[id]'";
+            $resultTagihan = mysqli_query($conn, $queryTagihan);
+            $tagihan = mysqli_fetch_assoc($resultTagihan);
+            ?>
+
 
             <div class="card-body">
                 <form action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="idTagihan" id="idTagihan" value="<?= $_GET['id'] ?>">
-                    <input type="hidden" name="jumlah" id="jumlah" value="<?= $_GET['jumlah'] ?>">
+                    <input type="hidden" name="jumlah" id="jumlah" value="<?= $tagihan['jumlah'] ?>">
                     <div class="mb-3">
                         <label for="va" class="text-lg text-dark text-bold">Masukkan VA</label>
-                        <input type="text" name="va" style="border: 2px solid gray;" class="form-control form-control-lg" placeholder="VA Tagihan..." required autocomplete="off">
+                        <input type="text" name="va" style="border: 2px solid gray;" class="form-control form-control-lg" value="<?= $tagihan['tagihan'] ?>" readonly autocomplete="off">
                     </div>
                     <div class="mb-3">
                         <label for="bukti" class="text-lg text-dark text-bold">Masukkan Bukti</label>
