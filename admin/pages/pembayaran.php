@@ -152,7 +152,7 @@ $hasil = $conn->query($query);
     <div class="container-fluid py-4">
       <div class="row">
         <div class="mb-5">
-          <a href="functions/tambahkamar.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Pembayaran</a>
+          <a href="cetak/cetakbayar.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Print Pembayaran</a>
         </div>
         <div class="col-12">
           <div class="card my-4">

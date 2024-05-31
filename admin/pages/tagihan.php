@@ -154,6 +154,7 @@ $hasil = $conn->query($query);
       <div class="row">
         <div class="mb-5">
           <a href="functions/tambahTagihan.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Tagihan</a>
+          <a href="cetak/cetaktagihan.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Cetak Tagihan</a>
         </div>
         <div class="col-12">
           <div class="card my-4">

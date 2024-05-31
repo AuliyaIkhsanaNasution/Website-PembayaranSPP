@@ -176,6 +176,7 @@ $hasil = $conn->query($query);
       <div class="row">
         <div class="mb-5">
           <a href="functions/tambahkelas.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Kelas</a>
+          <a href="cetak/cetakkelas.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Print Data Kelas</a>
         </div>
         <div class="col-12">
           <div class="card my-4">
@@ -216,6 +217,7 @@ $hasil = $conn->query($query);
           </div>
         </div>
       </div>
+      <!-- buatkan button print -->
       <footer class="footer py-4  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
