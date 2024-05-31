@@ -4,14 +4,18 @@ session_start();
 
 // Redirect if not logged in
 if (!isset($_SESSION["login"])) {
-    header("Location: ../login.php");
-    exit;
+  header("Location: ../login.php");
+  exit;
 }
 
 // read
-$query = "SELECT pembayaran.id_pembayaran, tagihan.id_tagihan, pembayaran.tanggal_pembayaran, pembayaran.jumlah
-FROM pembayaran 
-JOIN tagihan  ON pembayaran.id_tagihan = tagihan.id_tagihan";
+$query = "SELECT *,  pembayaran.status as konfirmasi FROM pembayaran
+JOIN tagihan ON pembayaran.id_tagihan = tagihan.id_tagihan
+JOIN siswa ON tagihan.nisn = siswa.nisn
+JOIN kelas ON siswa.id_kelas = kelas.id_kelas
+JOIN bulan ON tagihan.id_bulan = bulan.id_bulan
+WHERE tagihan.nisn = '$_SESSION[nisn]'
+ORDER BY tagihan.id_tagihan DESC";
 $hasil = $conn->query($query);
 ?>
 
@@ -45,7 +49,7 @@ $hasil = $conn->query($query);
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
@@ -57,7 +61,7 @@ $hasil = $conn->query($query);
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
 
-      <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link text-white " href="dashboard.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
@@ -133,7 +137,7 @@ $hasil = $conn->query($query);
       </div>
     </nav>
     <!-- End Navbar -->
-    
+
     <div class="container-fluid py-4">
       <div class="row">
         <div class="mb-5">
@@ -151,11 +155,15 @@ $hasil = $conn->query($query);
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No.</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Tagihan</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Pembayaran</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No.</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Tagihan</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Siswa</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kelas</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Pembayaran</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bukti</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No VA</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -167,16 +175,29 @@ $hasil = $conn->query($query);
                       <tr>
                         <td class="text-center"><?= $nom++ ?></td>
                         <td class="align-middle text-center text-sm text-bold"><?= $pembayaran['id_tagihan'] ?></td>
+                        <td class="align-middle text-center text-sm text-bold"><?= $pembayaran['nama'] ?></td>
+                        <td class="align-middle text-center text-sm text-bold"><?= $pembayaran['nama_kelas'] ?></td>
                         <td class="align-middle text-center text-sm text-bold"><?= $pembayaran['tanggal_pembayaran'] ?></td>
-                        <td class="align-middle text-center text-sm text-bold"><?= $pembayaran['jumlah'] ?></td>
+                        <td class="align-middle text-center text-sm text-bold">Rp <?= number_format($pembayaran['jumlah'], 0, ',', '.') ?></td>
                         <td class="align-middle text-center text-sm text-bold">
-                          <a href="functions/editpembayaran.php?id=<?= $pembayaran['id_pembayaran'] ?>"><i class="material-icons">edit</i></a>
-                          <a href="functions/hapuspembayaran.php?id=<?= $pembayaran['id_pembayaran'] ?>"><i class=" material-icons" onclick=" return confirm ('Apakah Anda Yakin Ingin Menghapus data Ini ?');">delete</i></a>
+                          <a href="../../siswa/assets/img/bukti/<?= $pembayaran['bukti'] ?>" target="_blank">
+                            <img src="../../siswa/assets/img/bukti/<?= $pembayaran['bukti'] ?>" alt="bukti" class="img-thumbnail">
+                          </a>
+                        </td>
+                        <td class="align-middle text-center text-sm text-bold"><?= $pembayaran['va'] ?>
+                        </td>
+                        <td class="align-middle text-center text-sm text-bold">
+                          <?php if ($pembayaran['konfirmasi'] == 'Belum Dikonfirmasi') : ?>
+                            <a href="functions/konfirmasiPembayaran.php?id_pembayaran=<?= $pembayaran['id_pembayaran'] ?>&id_tagihan=<?= $pembayaran['id_tagihan'] ?>" class="btn btn-primary" onclick="return confirm('Yakin ingin konfirmasi pembayaran? Cek kembali Bila Diperlukan')">KONFIRMASI</a>
+                            <a href="functions/batal.php?id_pembayaran=<?= $pembayaran['id_pembayaran'] ?>&id_tagihan=<?= $pembayaran['id_tagihan'] ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin membatalkan pembayaran? Cek kembali Bila Diperlukan')">BATALKAN</a>
+                          <?php else : ?>
+                            <span>LUNAS</span>
+                          <?php endif; ?>
                         </td>
                       </tr>
                     <?php endwhile;
                     ?>
-                    </tbody>
+                  </tbody>
                   </tbody>
                 </table>
               </div>

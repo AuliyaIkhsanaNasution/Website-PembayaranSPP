@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2024 at 05:03 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: May 31, 2024 at 02:47 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -68,15 +68,10 @@ CREATE TABLE `pembayaran` (
   `id_tagihan` int(11) DEFAULT NULL,
   `tanggal_pembayaran` date NOT NULL,
   `jumlah` decimal(10,2) NOT NULL,
-  `status` enum('Belum Dikonfirmasi','Dikonfirmasi','','') NOT NULL
+  `status` varchar(50) NOT NULL,
+  `bukti` varchar(50) NOT NULL,
+  `va` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pembayaran`
---
-
-INSERT INTO `pembayaran` (`id_pembayaran`, `id_tagihan`, `tanggal_pembayaran`, `jumlah`, `status`) VALUES
-(1, 2, '2024-05-29', 500000.00, 'Belum Dikonfirmasi');
 
 -- --------------------------------------------------------
 
@@ -99,7 +94,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nisn`, `nis`, `nama`, `alamat`, `no_telepon`, `id_kelas`, `spp`) VALUES
-('12345', '123', 'bobby', 'medan', '235235235', 1, 0),
+('12345', '123', 'bobby', 'medan', '235235235', 1, 500000),
 ('674897', '12321', 'Auliya Ikhsana Nasution', 'jl.patumbak', '085159968152', 1, 0);
 
 -- --------------------------------------------------------
@@ -115,7 +110,7 @@ CREATE TABLE `tagihan` (
   `id_bulan` int(11) DEFAULT NULL,
   `jumlah` decimal(10,2) NOT NULL,
   `tagihan` varchar(20) NOT NULL DEFAULT '-',
-  `status` enum('BELUM','LUNAS') DEFAULT 'LUNAS'
+  `status` enum('BELUM','LUNAS','DIPERIKSA') DEFAULT 'LUNAS'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -123,7 +118,7 @@ CREATE TABLE `tagihan` (
 --
 
 INSERT INTO `tagihan` (`id_tagihan`, `nisn`, `id_kelas`, `id_bulan`, `jumlah`, `tagihan`, `status`) VALUES
-(2, '12345', 1, 1, 500000.00, '-', 'LUNAS');
+(2, '12345', 1, 1, 500000.00, '-', 'BELUM');
 
 --
 -- Indexes for dumped tables
@@ -184,7 +179,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tagihan`
