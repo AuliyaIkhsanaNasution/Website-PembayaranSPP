@@ -54,7 +54,7 @@ $html = '
         <hr>
     </div>
     <div class="content">
-        <h2>Data Kelas</h2>
+        <h2>Data Tagihan</h2>
         <p>Periode: ' . date('F Y') . '</p>
         <table>
             <thead>

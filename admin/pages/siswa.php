@@ -30,6 +30,9 @@ $hasil = $conn->query($query);
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+
+      <!-- sweetalert -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Nucleo Icons -->
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -45,6 +48,53 @@ $hasil = $conn->query($query);
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
+
+<!-- alert -->
+<?php
+  if (isset($_GET['tambah'])) : ?>
+    <script>
+      Swal.fire({
+        icon: "success",
+        title: "Sukses",
+        text: "Data Kelas berhasil Ditambahkan",
+      });
+    </script>
+  <?php endif; ?>
+
+  <?php
+  if (isset($_GET['gagalnisn'])) : ?>
+    <script>
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Data Siswa gagal Ditambahkan",
+      });
+    </script>
+  <?php endif; ?>
+
+  <?php
+  if (isset($_GET['ubah'])) : ?>
+    <script>
+      Swal.fire({
+        icon: "success",
+        title: "Sukses",
+        text: "Data Kelas berhasil Diupdate",
+      });
+    </script>
+  <?php endif; ?>
+
+  <?php
+  if (isset($_GET['hapus'])) : ?>
+    <script>
+      Swal.fire({
+        icon: "success",
+        title: "Sukses",
+        text: "Data Kelas berhasil Dihapus",
+      });
+    </script>
+  <?php endif; ?>
+  <!-- akhir alert -->
+
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -138,6 +188,7 @@ $hasil = $conn->query($query);
       <div class="row">
         <div class="mb-5">
           <a href="functions/tambahSiswa.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Siswa</a>
+          <a href="cetak/cetaksiswa.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Print Data Siswa</a>
         </div>
         <div class="col-12">
           <div class="card my-4">
@@ -205,29 +256,6 @@ $hasil = $conn->query($query);
     </div>
   </main>
 
-
-  <!-- alert -->
-  <?php
-  if (isset($_GET['tambah'])) : ?>
-    <script>
-      alert("Data Berhasil Ditambahkan");
-    </script>
-  <?php endif; ?>
-
-  <?php
-  if (isset($_GET['ubah'])) : ?>
-    <script>
-      alert("Data Berhasil Diupdate");
-    </script>
-  <?php endif; ?>
-
-  <?php
-  if (isset($_GET['hapus'])) : ?>
-    <script>
-      alert("Data Berhasil Dihapus");
-    </script>
-  <?php endif; ?>
-  <!-- akhir alert -->
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
