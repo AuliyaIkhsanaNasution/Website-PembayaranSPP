@@ -48,6 +48,18 @@ $hasil = $conn->query($query);
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
+
+<?php
+  if (isset($_GET['konfirmasi'])) : ?>
+    <script>
+      Swal.fire({
+        icon: "success",
+        title: "Sukses",
+        text: "Data Pembayaran berhasil Dikonfirmasi",
+      });
+    </script>
+  <?php endif; ?>
+
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -222,29 +234,6 @@ $hasil = $conn->query($query);
     </div>
   </main>
 
-
-  <!-- alert -->
-  <?php
-  if (isset($_GET['tambah'])) : ?>
-    <script>
-      alert("Data Berhasil Ditambahkan");
-    </script>
-  <?php endif; ?>
-
-  <?php
-  if (isset($_GET['ubah'])) : ?>
-    <script>
-      alert("Data Berhasil Diupdate");
-    </script>
-  <?php endif; ?>
-
-  <?php
-  if (isset($_GET['hapus'])) : ?>
-    <script>
-      alert("Data Berhasil Dihapus");
-    </script>
-  <?php endif; ?>
-  <!-- akhir alert -->
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
