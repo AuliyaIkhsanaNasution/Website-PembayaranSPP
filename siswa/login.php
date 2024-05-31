@@ -2,13 +2,13 @@
 require "pages/functions/koneksi.php";
 session_start();
 
-if (isset($_SESSION["login"])) {
+if (isset($_SESSION["loginsiswa"])) {
     header("Location: pages/dashboard.php");
     exit;
 }
 
 // Memproses login ketika tombol login ditekan
-if (isset($_POST["login"])) {
+if (isset($_POST["loginsiswa"])) {
     // Mengambil nilai NISN dan NIS dari form login
     $nisn = $_POST["nisn"];
     $nis = $_POST["nis"];
@@ -22,7 +22,7 @@ if (isset($_POST["login"])) {
         $row = mysqli_fetch_assoc($result);
 
         // Jika data ditemukan, set sesi login dan redirect ke halaman utama
-        $_SESSION["login"] = true;
+        $_SESSION["loginsiswa"] = true;
         $_SESSION["nama"] = $row['nama']; // Assuming 'nama' is the column for the user's name
         $_SESSION["nisn"] = $row['nisn'];
 
@@ -85,7 +85,7 @@ if (isset($_POST["login"])) {
                             <input class="w-full text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400" type="text" name="nis" placeholder="Masukkan NIS" required>
                         </div>
                         <div>
-                            <button type="submit" name="login" class="w-full flex justify-center bg-blue-800 hover:bg-blue-700 text-gray-100 p-3 rounded-lg tracking-wide font-semibold cursor-pointer transition ease-in duration-500">
+                            <button type="submit" name="loginsiswa" class="w-full flex justify-center bg-blue-800 hover:bg-blue-700 text-gray-100 p-3 rounded-lg tracking-wide font-semibold cursor-pointer transition ease-in duration-500">
                                 Masuk
                             </button>
                         </div>

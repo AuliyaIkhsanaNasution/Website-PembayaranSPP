@@ -3,7 +3,7 @@ require "koneksi.php";
 session_start();
 
 // pemeriksaan session login
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["loginsiswa"])) {
     header("Location: ../../../index.php");
     exit;
 }

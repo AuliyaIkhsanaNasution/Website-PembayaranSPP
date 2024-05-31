@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION["loginsiswa"])) {
+  header("Location: ../login.php");
+  exit;
+}
 require "functions/koneksi.php"
 ?>
 
@@ -23,6 +27,10 @@ require "functions/koneksi.php"
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
@@ -35,8 +43,21 @@ require "functions/koneksi.php"
 <?php
 if (isset($_GET['lunas'])) : ?>
   <script>
-    alert("Tagihan Lunas!!Anda tidak perlu mengirim bukti pembayaran.");
+Swal.fire("Tagihan Lunas!!Anda tidak perlu mengirim bukti pembayaran.");
   </script>
+<?php endif; ?>
+
+
+<?php
+if (isset($_GET['bukti'])) : ?>
+ <script>
+      Swal.fire({
+        icon: "success",
+        title: "Sukses",
+        text: "Bukti Pembayaran Berhasil Dikirmkan",
+        footer: 'Cek status Secara Berkala'
+      });
+    </script>
 <?php endif; ?>
 
 
@@ -108,9 +129,6 @@ if (isset($_GET['lunas'])) : ?>
 
     <div class="container-fluid py-4">
       <div class="row">
-        <div class="mb-5">
-          <a href="functions/tambahkamar.php" class="p-3 rounded-2 bg-gradient-primary text-white text-bold">Tambah Data Tagihan</a>
-        </div>
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">

@@ -1,6 +1,12 @@
 <?php
 session_start();
+if (!isset($_SESSION["loginsiswa"])) {
+  header("Location: ../login.php");
+  exit;
+}
 require "functions/koneksi.php"
+
+
 ?>
 
 <!DOCTYPE html>
