@@ -176,7 +176,7 @@ $hasil = $conn->query($query);
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bukti</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No VA</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                     </tr>
                   </thead>
                   <tbody>

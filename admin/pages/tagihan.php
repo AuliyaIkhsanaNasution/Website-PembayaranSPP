@@ -179,7 +179,6 @@ $hasil = $conn->query($query);
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tagihan</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -196,10 +195,7 @@ $hasil = $conn->query($query);
                         <td class="align-middle text-center text-sm"><?= $tagihan['jumlah'] ?></td>
                         <td class="align-middle text-center text-sm"><?= $tagihan['tagihan'] ?></td>
                         <td class="align-middle text-center text-sm"><?= $tagihan['status'] ?></td>
-                        <td class="align-middle text-center text-sm">
-                          <a href="functions/edittagihan.php?id=<?= $tagihan['id_tagihan'] ?>"><i class="material-icons">edit</i></a>
-                          <a href="functions/hapustagihan.php?id=<?= $tagihan['id_tagihan'] ?>" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus data Ini ?');"><i class="material-icons">delete</i></a>
-                        </td>
+                        
                       </tr>
                     <?php endwhile; ?>
                   </tbody>
