@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2024 at 02:47 AM
+-- Generation Time: Jun 01, 2024 at 05:13 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -37,7 +37,18 @@ CREATE TABLE `bulan` (
 --
 
 INSERT INTO `bulan` (`id_bulan`, `nama_bulan`) VALUES
-(1, 'Januari');
+(1, 'Januari'),
+(2, 'Februari'),
+(3, 'Maret'),
+(4, 'April'),
+(5, 'Mei'),
+(6, 'Juni'),
+(7, 'Juli'),
+(8, 'Agustus'),
+(9, 'September'),
+(10, 'Oktober'),
+(11, 'November'),
+(12, 'Desember');
 
 -- --------------------------------------------------------
 
@@ -55,7 +66,19 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`id_kelas`, `nama_kelas`) VALUES
-(1, '10 MIPA 1');
+(1, '10 MIPA 1'),
+(2, '10 MIPA 2'),
+(3, '10 MIPA 3'),
+(7, '10 IPS 1'),
+(8, '10 IPS 2'),
+(9, '10 IPS 3'),
+(10, '10 IA 1'),
+(11, '10 IA 2'),
+(12, '11 MIPA 1'),
+(13, '11 MIPA 2'),
+(14, '11 MIPA 3'),
+(16, '11 IPS 1'),
+(17, '11 IPS 2');
 
 -- --------------------------------------------------------
 
@@ -72,6 +95,13 @@ CREATE TABLE `pembayaran` (
   `bukti` varchar(50) NOT NULL,
   `va` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pembayaran`
+--
+
+INSERT INTO `pembayaran` (`id_pembayaran`, `id_tagihan`, `tanggal_pembayaran`, `jumlah`, `status`, `bukti`, `va`) VALUES
+(1, 3, '2024-06-01', 200000.00, 'Dikonfirmasi', '665a8b2add6d9.png', '4972205102004');
 
 -- --------------------------------------------------------
 
@@ -94,8 +124,11 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nisn`, `nis`, `nama`, `alamat`, `no_telepon`, `id_kelas`, `spp`) VALUES
-('12345', '123', 'bobby', 'medan', '235235235', 1, 500000),
-('674897', '12321', 'Auliya Ikhsana Nasution', 'jl.patumbak', '085159968152', 1, 0);
+('2205102001', '2001', 'David Miller', 'garu 2', '081234563456', 17, 200000),
+('2205102002', '2002', 'Nova Emberlyn', 'Jalan EFG No. 808, Kota P', '081234563456', 17, 200000),
+('2205102004', '2004', 'aisyah canda', 'rahuning pasar 2', '085159968153', 14, 200000),
+('2205102031', '2031', 'Rizky Aminuddin', 'Jl.Sunggal Tirtanadi', '087865187234', 11, 200000),
+('2205102068', '2068', 'Sela Agustina', 'Jl.Pertahanan dsn.V', '087874739293', 8, 200000);
 
 -- --------------------------------------------------------
 
@@ -118,7 +151,11 @@ CREATE TABLE `tagihan` (
 --
 
 INSERT INTO `tagihan` (`id_tagihan`, `nisn`, `id_kelas`, `id_bulan`, `jumlah`, `tagihan`, `status`) VALUES
-(2, '12345', 1, 1, 500000.00, '-', 'BELUM');
+(1, '2205102001', 17, 5, 200000.00, '4972205102001', 'BELUM'),
+(2, '2205102002', 17, 5, 200000.00, '4972205102002', 'BELUM'),
+(3, '2205102004', 14, 5, 200000.00, '-', 'LUNAS'),
+(4, '2205102031', 11, 5, 200000.00, '4972205102031', 'BELUM'),
+(5, '2205102068', 8, 5, 200000.00, '4972205102068', 'BELUM');
 
 --
 -- Indexes for dumped tables
@@ -167,25 +204,25 @@ ALTER TABLE `tagihan`
 -- AUTO_INCREMENT for table `bulan`
 --
 ALTER TABLE `bulan`
-  MODIFY `id_bulan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_bulan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tagihan`
 --
 ALTER TABLE `tagihan`
-  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
